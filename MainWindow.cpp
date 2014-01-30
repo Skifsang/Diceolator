@@ -23,6 +23,7 @@ const int lowerThresholdAbility = 13;
 const QString youAbilityHighEnough = "Получившиеся значения достаточно высоки. Чтобы получить другие перезагрузите игру";
 int count = 0;
 QStringList listOfCandidatsToBecomeAbility;
+QStringList trueListOfCandidatsToBecomeAbility;
 
 void MainWindow::on_Calculate_pressed()
 {
@@ -46,12 +47,14 @@ void MainWindow::on_calculatesCandidateToBecomeAbility_pressed()
     setupAbilites(ui->labelCandidatToBecomeAbility5, ui->labelCandidatToBecomeAbility5Modifier);
     setupAbilites(ui->labelCandidatToBecomeAbility6, ui->labelCandidatToBecomeAbility6Modifier);
 
-    listOfCandidatsToBecomeAbility << ui->labelCandidatToBecomeAbility1->text() <<
+    listOfCandidatsToBecomeAbility << "" << ui->labelCandidatToBecomeAbility1->text() <<
                                       ui->labelCandidatToBecomeAbility2->text() <<
                                       ui->labelCandidatToBecomeAbility3->text() <<
                                       ui->labelCandidatToBecomeAbility4->text() <<
                                       ui->labelCandidatToBecomeAbility5->text() <<
                                       ui->labelCandidatToBecomeAbility6->text();
+    trueListOfCandidatsToBecomeAbility = listOfCandidatsToBecomeAbility;
+
 
     if (checkForLowerAbility(ui->labelCandidatToBecomeAbility1, ui->labelCandidatToBecomeAbility2,
                              ui->labelCandidatToBecomeAbility3, ui->labelCandidatToBecomeAbility4,
@@ -128,205 +131,134 @@ bool MainWindow::checkForLowerAbility(QLabel * labelAbility1, QLabel * labelAbil
     else return false;
 }
 
+//Заполнить боксы кандидатами в характеристики
 void MainWindow::setupComboBoxes(QComboBox * comboBox, QStringList * listOfCandidatsToBecomeAbility)
 {
     comboBox->addItems(*listOfCandidatsToBecomeAbility);
 }
 
+void fairSpreadAbility (int index, QComboBox * box){
+
+        box->setItemText(0, box->itemText(index));
+        box->currentText() = box->itemText(0);
+        box->setEnabled(false);
+
+}
+
+void testBOX (QComboBox * box){
+    if (box->isEnabled()) {
+        box->clear();
+        box->addItems(listOfCandidatsToBecomeAbility);
+    }
+}
+
 void MainWindow::on_comboBoxStrength_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxStrength->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxStrength->currentText() != ui->comboBoxStrength->itemText(0))){
-        if (ui->comboBoxStrength->currentText() == ""){
 
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
+        if (ui->comboBoxStrength->currentText() != ""){
+           fairSpreadAbility(index, ui->comboBoxStrength);
+           listOfCandidatsToBecomeAbility.removeAt(index);
+            testBOX(ui->comboBoxDexterity);
+            testBOX(ui->comboBoxConstitution);
+            testBOX(ui->comboBoxIntelligence);
+            testBOX(ui->comboBoxWisdom);
+            testBOX(ui->comboBoxCharisma);
         }
-        else{
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxStrength->addItem("");
-            ui->comboBoxCharisma->removeItem(index);
-            ui->comboBoxDexterity->removeItem(index);
-            ui->comboBoxConstitution->removeItem(index);
-            ui->comboBoxWisdom->removeItem(index);
-            ui->comboBoxIntelligence->removeItem(index);
-        }
-    }
+
+
 }
 
 void MainWindow::on_comboBoxDexterity_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxDexterity->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxDexterity->currentText() != ui->comboBoxDexterity->itemText(0))){
-        if (ui->comboBoxDexterity->currentText() == ""){
 
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
-        }
-        else{
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxDexterity->addItem("");
-            ui->comboBoxCharisma->removeItem(index);
-            ui->comboBoxStrength->removeItem(index);
-            ui->comboBoxConstitution->removeItem(index);
-            ui->comboBoxWisdom->removeItem(index);
-            ui->comboBoxIntelligence->removeItem(index);
-        }
+    if (ui->comboBoxDexterity->currentText() != ""){
+        fairSpreadAbility(index, ui->comboBoxDexterity);
+        listOfCandidatsToBecomeAbility.removeAt(index);
+        testBOX(ui->comboBoxStrength);
+        testBOX(ui->comboBoxConstitution);
+        testBOX(ui->comboBoxIntelligence);
+        testBOX(ui->comboBoxWisdom);
+        testBOX(ui->comboBoxCharisma);
     }
+
 }
 
 void MainWindow::on_comboBoxIntelligence_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxConstitution->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxConstitution->currentText() != ui->comboBoxConstitution->itemText(0))){
-        if (ui->comboBoxIntelligence->currentText() == ""){
 
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
-        }
-        else{
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxIntelligence->addItem("");
-            ui->comboBoxCharisma->removeItem(index);
-            ui->comboBoxDexterity->removeItem(index);
-            ui->comboBoxConstitution->removeItem(index);
-            ui->comboBoxWisdom->removeItem(index);
-            ui->comboBoxStrength->removeItem(index);
-        }
+    if (ui->comboBoxIntelligence->currentText() != ""){
+        fairSpreadAbility(index, ui->comboBoxIntelligence);
+        listOfCandidatsToBecomeAbility.removeAt(index);
+        testBOX(ui->comboBoxDexterity);
+        testBOX(ui->comboBoxConstitution);
+        testBOX(ui->comboBoxStrength);
+        testBOX(ui->comboBoxWisdom);
+        testBOX(ui->comboBoxCharisma);
     }
+
 }
 
 void MainWindow::on_comboBoxConstitution_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxConstitution->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxConstitution->currentText() != ui->comboBoxConstitution->itemText(0))){
-        if (ui->comboBoxConstitution->currentText() == ""){
-
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
-        }
-        else{
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxConstitution->addItem("");
-            ui->comboBoxCharisma->removeItem(index);
-            ui->comboBoxDexterity->removeItem(index);
-            ui->comboBoxStrength->removeItem(index);
-            ui->comboBoxWisdom->removeItem(index);
-            ui->comboBoxIntelligence->removeItem(index);
-        }
+    if (ui->comboBoxConstitution->currentText() != ""){
+        fairSpreadAbility(index, ui->comboBoxConstitution);
+        listOfCandidatsToBecomeAbility.removeAt(index);
+        testBOX(ui->comboBoxDexterity);
+        testBOX(ui->comboBoxStrength);
+        testBOX(ui->comboBoxIntelligence);
+        testBOX(ui->comboBoxWisdom);
+        testBOX(ui->comboBoxCharisma);
     }
+
 }
 
 void MainWindow::on_comboBoxWisdom_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxWisdom->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxWisdom->currentText() != ui->comboBoxWisdom->itemText(0))){
-        if (ui->comboBoxWisdom->currentText() == ""){
-
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
-        }
-        else{
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxWisdom->addItem("");
-            ui->comboBoxCharisma->removeItem(index);
-            ui->comboBoxDexterity->removeItem(index);
-            ui->comboBoxConstitution->removeItem(index);
-            ui->comboBoxStrength->removeItem(index);
-            ui->comboBoxIntelligence->removeItem(index);
-        }
+    if (ui->comboBoxWisdom->currentText() != ""){
+      fairSpreadAbility(index, ui->comboBoxWisdom);
+      listOfCandidatsToBecomeAbility.removeAt(index);
+      testBOX(ui->comboBoxDexterity);
+      testBOX(ui->comboBoxConstitution);
+      testBOX(ui->comboBoxIntelligence);
+      testBOX(ui->comboBoxStrength);
+      testBOX(ui->comboBoxCharisma);
     }
+
 }
 
 void MainWindow::on_comboBoxCharisma_activated(int index)
 {
-    qDebug () << index << count;
-    if ((ui->comboBoxCharisma->currentText() != listOfCandidatsToBecomeAbility[0]) ||
-            (ui->comboBoxCharisma->currentText() != ui->comboBoxCharisma->itemText(0))){
-        if (ui->comboBoxCharisma->currentText() == ""){
-
-            ui->comboBoxStrength->clear();
-            ui->comboBoxStrength->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxDexterity->clear();
-            ui->comboBoxDexterity->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxConstitution->clear();
-            ui->comboBoxConstitution->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxIntelligence->clear();
-            ui->comboBoxIntelligence->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxWisdom->clear();
-            ui->comboBoxWisdom->addItems(listOfCandidatsToBecomeAbility);
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItems(listOfCandidatsToBecomeAbility);
-        }
-        else{
-            ui->comboBoxCharisma->clear();
-            ui->comboBoxCharisma->addItem(listOfCandidatsToBecomeAbility[index]);
-            ui->comboBoxCharisma->addItem("");
-            ui->comboBoxStrength->removeItem(index);
-            ui->comboBoxDexterity->removeItem(index);
-            ui->comboBoxConstitution->removeItem(index);
-            ui->comboBoxWisdom->removeItem(index);
-            ui->comboBoxIntelligence->removeItem(index);
-        }
+    if (ui->comboBoxCharisma->currentText() != ""){
+        fairSpreadAbility(index, ui->comboBoxCharisma);
+        listOfCandidatsToBecomeAbility.removeAt(index);
+        testBOX(ui->comboBoxDexterity);
+        testBOX(ui->comboBoxConstitution);
+        testBOX(ui->comboBoxIntelligence);
+        testBOX(ui->comboBoxWisdom);
+        testBOX(ui->comboBoxStrength);
     }
+
+}
+
+void MainWindow::on_dropSpreadAbilites_pressed()
+{
+    ui->comboBoxStrength->clear();
+    ui->comboBoxStrength->setEnabled(true);
+    ui->comboBoxDexterity->clear();
+    ui->comboBoxDexterity->setEnabled(true);
+    ui->comboBoxConstitution->clear();
+    ui->comboBoxConstitution->setEnabled(true);
+    ui->comboBoxIntelligence->clear();
+    ui->comboBoxIntelligence->setEnabled(true);
+    ui->comboBoxWisdom->clear();
+    ui->comboBoxWisdom->setEnabled(true);
+    ui->comboBoxCharisma->clear();
+    ui->comboBoxCharisma->setEnabled(true);
+    listOfCandidatsToBecomeAbility = trueListOfCandidatsToBecomeAbility;
+    setupComboBoxes(ui->comboBoxStrength, &listOfCandidatsToBecomeAbility);
+    setupComboBoxes(ui->comboBoxDexterity, &listOfCandidatsToBecomeAbility);
+    setupComboBoxes(ui->comboBoxConstitution, &listOfCandidatsToBecomeAbility);
+    setupComboBoxes(ui->comboBoxIntelligence, &listOfCandidatsToBecomeAbility);
+    setupComboBoxes(ui->comboBoxWisdom, &listOfCandidatsToBecomeAbility);
+    setupComboBoxes(ui->comboBoxCharisma, &listOfCandidatsToBecomeAbility);
 }

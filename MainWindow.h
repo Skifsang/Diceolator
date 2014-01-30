@@ -33,6 +33,8 @@ private slots:
 
     void on_comboBoxCharisma_activated(int index);
 
+    void on_dropSpreadAbilites_pressed();
+
 private:
     Ui::MainWindow *ui;
 
