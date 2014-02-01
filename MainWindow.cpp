@@ -137,6 +137,7 @@ void MainWindow::setupComboBoxes(QComboBox * comboBox, QStringList * listOfCandi
     comboBox->addItems(*listOfCandidatsToBecomeAbility);
 }
 
+//Запомнить выбранную характерисику
 void fairSpreadAbility (int index, QComboBox * box){
 
         box->setItemText(0, box->itemText(index));
@@ -145,6 +146,7 @@ void fairSpreadAbility (int index, QComboBox * box){
 
 }
 
+//Внести данные в список вещей коробки, после выбора характерисики
 void testBOX (QComboBox * box){
     if (box->isEnabled()) {
         box->clear();
@@ -240,6 +242,7 @@ void MainWindow::on_comboBoxCharisma_activated(int index)
 
 }
 
+//Очистка коробки
 void clearBox (QComboBox * box){
     box->clear();
     box->setEnabled(true);
