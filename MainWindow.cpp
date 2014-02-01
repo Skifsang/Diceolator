@@ -240,20 +240,19 @@ void MainWindow::on_comboBoxCharisma_activated(int index)
 
 }
 
+void clearBox (QComboBox * box){
+    box->clear();
+    box->setEnabled(true);
+}
+
 void MainWindow::on_dropSpreadAbilites_pressed()
 {
-    ui->comboBoxStrength->clear();
-    ui->comboBoxStrength->setEnabled(true);
-    ui->comboBoxDexterity->clear();
-    ui->comboBoxDexterity->setEnabled(true);
-    ui->comboBoxConstitution->clear();
-    ui->comboBoxConstitution->setEnabled(true);
-    ui->comboBoxIntelligence->clear();
-    ui->comboBoxIntelligence->setEnabled(true);
-    ui->comboBoxWisdom->clear();
-    ui->comboBoxWisdom->setEnabled(true);
-    ui->comboBoxCharisma->clear();
-    ui->comboBoxCharisma->setEnabled(true);
+    clearBox(ui->comboBoxStrength);
+    clearBox(ui->comboBoxDexterity);
+    clearBox(ui->comboBoxConstitution);
+    clearBox(ui->comboBoxIntelligence);
+    clearBox(ui->comboBoxWisdom);
+    clearBox(ui->comboBoxCharisma);
     listOfCandidatsToBecomeAbility = trueListOfCandidatsToBecomeAbility;
     setupComboBoxes(ui->comboBoxStrength, &listOfCandidatsToBecomeAbility);
     setupComboBoxes(ui->comboBoxDexterity, &listOfCandidatsToBecomeAbility);
